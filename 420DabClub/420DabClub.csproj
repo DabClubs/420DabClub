@@ -5,7 +5,7 @@
     <UserSecretsId>aspnet-_420DabClub-E92C2E60-95E1-48A3-9100-8AA15A69043F</UserSecretsId>
     <WebProject_DirectoryAccessLevelKey>1</WebProject_DirectoryAccessLevelKey>
     <RootNamespace>_420DabClub</RootNamespace>
-    <StartupObject>_420DabClub.Program</StartupObject>
+    <StartupObject></StartupObject>
     <ApplicationIcon>wwwroot\favicon.ico</ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -38,6 +38,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="signkeu.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
