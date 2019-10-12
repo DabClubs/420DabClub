@@ -11,11 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 namespace 420DabClub
 {
     public class Startup
-    {
+{
     public Startup(IConfiguration configuration)
-        {
-            configuration = configuration;
-        }
+    {
+        configuration = configuration;
+    }
 
     private readonly IConfiguration configuration;
 
@@ -26,47 +26,47 @@ namespace 420DabClub
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddAuthentication(sharedOptions =>
         {
-            services.AddAuthentication(sharedOptions =>
-            {
-                sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-            })
-            .AddAzureAd(options => GetConfiguration().Bind("AzureAd", options))
-            .AddCookie();
+            sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+        })
+        .AddAzureAd(options => GetConfiguration().Bind("AzureAd", options))
+        .AddCookie();
 
-            services.AddMvc(options =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));
-            })
-            .AddRazorPagesOptions(options =>
-            {
-                options.Conventions.AllowAnonymousToFolder("/Account");
-            });
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        services.AddMvc(options =>
         {
-            if (env.IsDevelopment())
+            var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+            options.Filters.Add(new AuthorizeFilter(policy));
+        })
+        .AddRazorPagesOptions(options =>
+        {
+            options.Conventions.AllowAnonymousToFolder("/Account");
+        });
+    }
+
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    {
+        if (env.IsDevelopment())
         {
             NewMethod(app);
             app.UseDeveloperExceptionPage();
         }
         else
-            {
-                app.UseExceptionHandler("/Error");
-            }
-
-            app.UseStaticFiles();
-
-            app.UseAuthentication();
-
-            app.UseMvc();
+        {
+            app.UseExceptionHandler("/Error");
         }
+
+        app.UseStaticFiles();
+
+        app.UseAuthentication();
+
+        app.UseMvc();
+    }
 
     private static void NewMethod(IApplicationBuilder app)
     {
